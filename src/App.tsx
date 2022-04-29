@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const RADIUS = 30;
-const BACKGROUND = "#f0f0f5"
 const getColor = (percent: number) => {
   if (percent > 35) {
     return "#00dcb3";
@@ -21,7 +19,6 @@ const currentDayDiff = (): number => {
   return timeDiff / (1000 * 60 * 60 * 24);
 }
 
-
 function App() {
   const [dayDiff, setDayDiff] = useState(currentDayDiff());
   useEffect(() => {
@@ -38,13 +35,14 @@ function App() {
 
   return (
     <div className="App">
-      <div className="App-header" style={{ flex: 1 }}>
-        <div>Days Since Eli Made Matzo Balls: <span style={{ color: getColor(percent) }}>{dayDiff}</span> days</div>
-        <div style={{ borderRadius: RADIUS, backgroundColor: BACKGROUND, height: "50vh", width: 140, margin: 20, display: "flex", padding: 10, alignItems: "flex-end" }}>
-          <div style={{ borderRadius: RADIUS, backgroundColor: getColor(percent), height: `${percent}%`, flex: 1, alignItems: "center", justifyContent: "center", display: 'flex' }}>
+      <div className="App-header">
+        <span><b>Matzo Meter</b></span>
+        <div className="progress">
+          <div className="progress-inner" style={{ backgroundColor: getColor(percent), height: `${percent}%` }}>
             <span><b>{percent}%</b></span>
           </div>
         </div>
+        <div>Days Since Eli Made Matzo Balls: <span style={{ color: getColor(percent) }}>{dayDiff}</span> days</div>
       </div>
     </div>
   );
