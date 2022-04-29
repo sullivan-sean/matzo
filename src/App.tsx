@@ -1,24 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const RADIUS = 30;
+const BACKGROUND = "#f0f0f5"
+const getColor = (percent: number) => {
+  if (percent > 35) {
+    return "#00dcb3";
+  }
+  if (percent > 15) {
+    return "#ffc200"
+  }
+  return "#ff0000"
+}
+
+const LAST_DATE = new Date(2022, 3, 26, 21, 30);
+const currentDayDiff = (): number => {
+  const now = new Date();
+  const timeDiff = now.getTime() - LAST_DATE.getTime();  
+  return timeDiff / (1000 * 60 * 60 * 24);
+}
+
+
 function App() {
+  const [dayDiff, setDayDiff] = useState(currentDayDiff());
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDayDiff(currentDayDiff());
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    }
+  }, []);
+
+  const percent = Math.max(100 - Math.round(dayDiff / 7 * 100 * 10) / 10, 0);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="App-header" style={{ flex: 1 }}>
+        <div>Days Since Eli Made Matzo Balls: <span style={{ color: getColor(percent) }}>{dayDiff}</span> days</div>
+        <div style={{ borderRadius: RADIUS, backgroundColor: BACKGROUND, height: "50vh", width: 140, margin: 20, display: "flex", padding: 10, alignItems: "flex-end" }}>
+          <div style={{ borderRadius: RADIUS, backgroundColor: getColor(percent), height: `${percent}%`, flex: 1, alignItems: "center", justifyContent: "center", display: 'flex' }}>
+            <span><b>{percent}%</b></span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

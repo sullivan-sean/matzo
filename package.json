@@ -19,6 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy-production": "yarn build && scp -r ./build/* sean@66.42.78.67:/var/www/dayssinceelimadematzoballs.com/html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
