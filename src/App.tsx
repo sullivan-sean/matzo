@@ -39,7 +39,7 @@ function App() {
         <span><b>Matzo Meter</b></span>
         <div className="progress">
           <div className="progress-inner" style={{ backgroundColor: getColor(percent), height: `${percent}%` }}>
-            <span><b>{percent}%</b></span>
+            <span><b>{percent.toFixed(2)}%</b></span>
           </div>
         </div>
         <div>Days Since Eli Made Matzo Balls: <span style={{ color: getColor(percent) }}>{dayDiff}</span> days</div>
